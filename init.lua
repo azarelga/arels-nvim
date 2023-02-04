@@ -36,12 +36,12 @@ end
 require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
-	
+
 	-- dashboard
 	use {
   	'glepnir/dashboard-nvim',
   	event = 'VimEnter',
-		config = function() 
+		config = function()
 		require('dashboard').setup { -- config
 		}
   	end,
@@ -55,7 +55,7 @@ require('packer').startup(function(use)
     'nvim-tree/nvim-web-devicons', -- optional, for file icons
   },
 		tag = 'nightly' -- optional, updated every week. (see issue #1193)
-	}	
+	}
 
 	-- comment plugin
 	use {
@@ -65,9 +65,15 @@ require('packer').startup(function(use)
     end
 	}
 
-	-- loml theme
-	-- use 'sainnhe/sonokai' 
-	
+	use {'nvim-treesitter/nvim-treesitter'}
+
+	-- lsp and its installer
+	use {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "neovim/nvim-lspconfig",
+	}
+
 	-- transparent theme
 	use {"catppuccin/nvim", as = "catppuccin"}
 
@@ -105,23 +111,8 @@ if install_plugins then
   return
 end
 
-require("nvim-tree").setup({
-  sort_by = "case_sensitive",
-  view = {
-    adaptive_size = true,
-    mappings = {
-      list = {
-        { key = "u", action = "dir_up" },
-      },
-    },
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
-})
+require("mason").setup()
+require("mason-lspconfig").setup()
 
 -- lualine config
 require('lualine').setup({
@@ -144,50 +135,13 @@ require("catppuccin").setup({
 	integrations = {
 		nvimtree = true
 	},
-})	
+})
 
--- coq settings 
-vim.g.coq_settings = {
-	auto_start = 'shut-up',
-} 
-
-local remap = vim.api.nvim_set_keymap
-local npairs = require('nvim-autopairs')
-
-npairs.setup({ map_bs = false, map_cr = false })
-
-vim.g.coq_settings = { keymap = { recommended = false } }
-
--- these mappings are coq recommended mappings unrelated to nvim-autopairs
-remap('i', '<esc>', [[pumvisible() ? "<c-e><esc>" : "<esc>"]], { expr = true, noremap = true })
-remap('i', '<c-c>', [[pumvisible() ? "<c-e><c-c>" : "<c-c>"]], { expr = true, noremap = true })
-remap('i', '<tab>', [[pumvisible() ? "<c-n>" : "<tab>"]], { expr = true, noremap = true })
-remap('i', '<s-tab>', [[pumvisible() ? "<c-p>" : "<bs>"]], { expr = true, noremap = true })
-
--- skip it, if you use another global object
-_G.MUtils= {}
-
-MUtils.CR = function()
-  if vim.fn.pumvisible() ~= 0 then
-    if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
-      return npairs.esc('<c-y>')
-    else
-      return npairs.esc('<c-e>') .. npairs.autopairs_cr()
-    end
-  else
-    return npairs.autopairs_cr()
-  end
-end
-remap('i', '<cr>', 'v:lua.MUtils.CR()', { expr = true, noremap = true })
-
-MUtils.BS = function()
-  if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ 'mode' }).mode == 'eval' then
-    return npairs.esc('<c-e>') .. npairs.autopairs_bs()
-  else
-    return npairs.autopairs_bs()
-  end
-end
-remap('i', '<bs>', 'v:lua.MUtils.BS()', { expr = true, noremap = true })
+-- find it int lua/me
+require("me.coq")
+require("me.lsp")
+require("me.treesitter")
+require("me.nvim-tree")
 
 -- floaterm config
 vim.keymap.set('n','<c-x>',':FloatermToggle newterm<cr>')
@@ -196,8 +150,8 @@ vim.keymap.set('n','<c-p>',':FloatermNew  --name=calculator python3.10<cr>')
 vim.keymap.set('t','<c-p>','<C-\\><C-n>:FloatermToggle calculator<cr>')
 vim.keymap.set('n','<c-c>',':FloatermNew --autoclose=0 gcc % -o %< && ./%< <cr>')
 
-
 -- keyboard shortcuts for plugins
 vim.g.mapleader=' '
 vim.keymap.set('n','<leader>t',':NvimTreeToggle <cr>')
 vim.cmd[[colorscheme catppuccin]]
+
