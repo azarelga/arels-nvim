@@ -34,67 +34,45 @@ end
 
 -- using packer
 require('packer').startup(function(use)
-  -- Package manager
-  use 'wbthomason/packer.nvim'
-
-	-- dashboard
+  use 'wbthomason/packer.nvim' -- Package manager
 	use {
-  	'glepnir/dashboard-nvim',
-  	event = 'VimEnter',
-		config = function()
-		require('dashboard').setup { -- config
-		}
-  	end,
-  	requires = {'nvim-tree/nvim-web-devicons'}
+		'glepnir/dashboard-nvim',
+		requires = {'nvim-tree/nvim-web-devicons'}
 	}
-
-	-- nvim tree
 	use {
-  'nvim-tree/nvim-tree.lua',
+  'nvim-tree/nvim-tree.lua', -- nvim tree
   requires = {
     'nvim-tree/nvim-web-devicons', -- optional, for file icons
   },
 		tag = 'nightly' -- optional, updated every week. (see issue #1193)
 	}
-
-	-- comment plugin
 	use {
-    'numToStr/Comment.nvim',
+    'numToStr/Comment.nvim', -- comment plugin
     config = function()
         require('Comment').setup()
     end
 	}
-
-	use {'nvim-treesitter/nvim-treesitter'}
-
-	-- lsp and its installer
-	use {
+	use {'nvim-treesitter/nvim-treesitter'} -- treesitter
+	use { -- lsp and mason
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
 	}
-
-	-- transparent theme
-	use {"catppuccin/nvim", as = "catppuccin"}
-
-	-- auto pairs
+	use 'simrat39/symbols-outline.nvim' -- symbols outline
+	use {"catppuccin/nvim", as = "catppuccin"} -- my theme
 	use {
-	"windwp/nvim-autopairs",
+	"windwp/nvim-autopairs", -- autopairs
     config = function() require("nvim-autopairs").setup {} end
 	}
-
-	-- surround to change pairs easy
-	use "tpope/vim-surround"
-
-	-- coq nvim
-	use 'ms-jpq/coq-nvim'
-	use 'ms-jpq/coq.artifacts'
-
-	-- terminal float
-	use 'voldikss/vim-floaterm'
-
-	-- lualine
-	use { 'nvim-lualine/lualine.nvim',
+	use "tpope/vim-surround" -- surround to change pairs easy
+	use 'ms-jpq/coq-nvim' -- coq nvim
+	use 'ms-jpq/coq.artifacts' -- coq artifacts
+	use 'voldikss/vim-floaterm' -- terminal float
+	use {
+  'nvim-telescope/telescope.nvim', tag = '0.1.1', -- telescope
+  requires = { {'nvim-lua/plenary.nvim'} } -- telescope dependencies
+	}
+	use { 'nvim-lualine/lualine.nvim', -- lualine
 		requires = { 'kyazdani42/nvim-web-devicons', opt = true },
 		config = function()
 			require('lualine').setup({
@@ -111,8 +89,54 @@ if install_plugins then
   return
 end
 
+require('dashboard').setup({
+	theme = 'hyper',
+    config = {
+      week_header = {
+       enable = true,
+      },
+      shortcut = {
+        { desc = ' Update', group = '@property', action = 'Lazy update', key = 'u' },
+        {
+          desc = ' Files',
+          group = 'Label',
+          action = 'Telescope find_files',
+          key = 'f',
+        },
+        {
+          desc = ' Apps',
+          group = 'DiagnosticHint',
+          action = 'Telescope app',
+          key = 'a',
+        },
+        {
+          desc = ' dotfiles',
+          group = 'Number',
+          action = 'Telescope .config/nvim/',
+          key = 'd',
+        },
+      },
+    },
+})
+
 require("mason").setup()
 require("mason-lspconfig").setup()
+require("symbols-outline").setup({
+	  keymaps = { -- These keymaps can be a string or a table for multiple keys
+			close = {"<Esc>", "q"},
+			goto_location = "<Cr>",
+			focus_location = "o",
+			hover_symbol = "<C-space>",
+			toggle_preview = "K",
+			rename_symbol = "r",
+			code_actions = "a",
+			fold = "h",
+			unfold = "l",
+			fold_all = "W",
+			unfold_all = "E",
+			fold_reset = "R",
+  },
+})
 
 -- lualine config
 require('lualine').setup({
@@ -128,30 +152,38 @@ require('Comment').setup({
 	}
 })
 
--- catppuccin config
-require("catppuccin").setup({
-	flavour = "macchiato",
-	transparent_background = true,
-	integrations = {
-		nvimtree = true
-	},
+-- telescope
+local builtin = require('telescope.builtin')
+local actions = require("telescope.actions")
+require("telescope").setup({
+    defaults = {
+        mappings = {
+            i = {
+                ["<esc>"] = actions.close,
+            },
+        },
+    },
 })
 
--- find it int lua/me
-require("me.coq")
-require("me.lsp")
-require("me.treesitter")
-require("me.nvim-tree")
-
--- floaterm config
+-- keyboard shortcuts for plugins
+vim.g.mapleader=' '
+vim.keymap.set('n','<leader>t',':NvimTreeToggle <cr>')
+vim.keymap.set('n','<leader>s', ':SymbolsOutline <cr>')
+vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
+vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 vim.keymap.set('n','<c-x>',':FloatermToggle newterm<cr>')
 vim.keymap.set('t','<c-x>','<C-\\><C-n>:FloatermToggle newterm<cr>')
 vim.keymap.set('n','<c-p>',':FloatermNew  --name=calculator python3.10<cr>')
 vim.keymap.set('t','<c-p>','<C-\\><C-n>:FloatermToggle calculator<cr>')
 vim.keymap.set('n','<c-c>',':FloatermNew --autoclose=0 gcc % -o %< && ./%< <cr>')
-
--- keyboard shortcuts for plugins
-vim.g.mapleader=' '
-vim.keymap.set('n','<leader>t',':NvimTreeToggle <cr>')
 vim.cmd[[colorscheme catppuccin]]
+
+-- find it in lua/me
+require("me.coq")
+require("me.lsp")
+require("me.treesitter")
+require("me.nvim-tree")
+require("me.catppuccin")
 
