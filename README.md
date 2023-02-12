@@ -1,6 +1,6 @@
 # arels-nvim
 
-do you hate your mouse? have you ever felt tired of using vs code because how simple it is to use it? are you those type of person who preferred ordering fresh beans of coffee and grind them for about 10 minutes or so rather than ordering a fresh ground of coffee? thank you for answering these trivial questions. anyways, this is my nvim config.
+do you hate your mouse? have you ever felt tired of using vs code because how simple it is to use it? are you those type of person who preferred ordering fresh beans of coffee and grind them for about 10 minutes or so rather than buying instant coffee? do you like to impress your friends with your weird obscure skills. thank you for answering these trivial questions. anyways, this is my lua config for my neovim.
 
 ## what's inside my init.lua?
 - packer manager
