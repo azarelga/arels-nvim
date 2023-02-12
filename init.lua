@@ -36,21 +36,43 @@ end
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim' -- Package manager
 	use {
-		'glepnir/dashboard-nvim',
-		requires = {'nvim-tree/nvim-web-devicons'}
-	}
-	use {
-  'nvim-tree/nvim-tree.lua', -- nvim tree
-  requires = {
-    'nvim-tree/nvim-web-devicons', -- optional, for file icons
-  },
-		tag = 'nightly' -- optional, updated every week. (see issue #1193)
-	}
+  	'nvim-tree/nvim-tree.lua', -- nvim tree
+  	requires = {
+    	'nvim-tree/nvim-web-devicons', -- optional, for file icons
+  	},
+			tag = 'nightly' -- optional, updated every week. (see issue #1193)
+		}
 	use {
     'numToStr/Comment.nvim', -- comment plugin
     config = function()
         require('Comment').setup()
     end
+	}
+	use 'lervag/vimtex'
+	use {
+		'glepnir/dashboard-nvim', -- dashboard
+		config = function()
+		require('dashboard').setup {
+			theme = 'hyper',
+			config = {
+				week_header = {
+				 enable = true,
+				},
+				shortcut = {
+					{ desc = ' Update',
+					group = '@property', action = 'PackerSync', key = 'u' },
+					{
+						desc = ' Files',
+						group = 'Label',
+						action = 'Telescope find_files',
+						key = 'f',
+					},
+				},
+			},
+		}
+		end,
+		requires = {'nvim-tree/nvim-web-devicons'},
+		event = "VimEnter"
 	}
 	use {'nvim-treesitter/nvim-treesitter'} -- treesitter
 	use { -- lsp and mason
@@ -88,36 +110,7 @@ end)
 if install_plugins then
   return
 end
-
-require('dashboard').setup({
-	theme = 'hyper',
-    config = {
-      week_header = {
-       enable = true,
-      },
-      shortcut = {
-        { desc = ' Update', group = '@property', action = 'Lazy update', key = 'u' },
-        {
-          desc = ' Files',
-          group = 'Label',
-          action = 'Telescope find_files',
-          key = 'f',
-        },
-        {
-          desc = ' Apps',
-          group = 'DiagnosticHint',
-          action = 'Telescope app',
-          key = 'a',
-        },
-        {
-          desc = ' dotfiles',
-          group = 'Number',
-          action = 'Telescope .config/nvim/',
-          key = 'd',
-        },
-      },
-    },
-})
+vim.g.vimtex_view_method = 'skim'
 
 require("mason").setup()
 require("mason-lspconfig").setup()
@@ -175,7 +168,7 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 vim.keymap.set('n','<c-x>',':FloatermToggle newterm<cr>')
 vim.keymap.set('t','<c-x>','<C-\\><C-n>:FloatermToggle newterm<cr>')
-vim.keymap.set('n','<c-p>',':FloatermNew  --name=calculator python3.10<cr>')
+vim.keymap.set('n','<c-p>',':FloatermToggle --name=calculator python3.10<cr>')
 vim.keymap.set('t','<c-p>','<C-\\><C-n>:FloatermToggle calculator<cr>')
 vim.keymap.set('n','<c-c>',':FloatermNew --autoclose=0 gcc % -o %< && ./%< <cr>')
 vim.cmd[[colorscheme catppuccin]]

@@ -20,7 +20,6 @@ require("catppuccin").setup({
 					information = { "underline" },
 			},
 		},
-		dashboard = true,
 		markdown = true,
 	},
 })
