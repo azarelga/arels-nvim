@@ -41,7 +41,7 @@ end
 remap('i', '<bs>', 'v:lua.MUtils.BS()', { expr = true, noremap = true })
 
 local lspconfig = require('lspconfig')
-local servers = { 'clangd', 'sumneko_lua', 'pyright', 'tsserver' }
+local servers = { 'clangd', 'lua_ls', 'pyright', 'tsserver' }
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup(require('coq').lsp_ensure_capabilities({
     -- on_attach = my_custom_on_attach,

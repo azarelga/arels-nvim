@@ -46,7 +46,7 @@ require('lspconfig').tsserver.setup {
 	flags = lsp_flags,
 }
 
-require('lspconfig').sumneko_lua.setup {
+require('lspconfig').lua_ls.setup {
 	settings = {
 		Lua = {
 			diagnostics = {
