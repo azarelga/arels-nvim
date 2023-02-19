@@ -168,7 +168,7 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 vim.keymap.set('n','<c-x>',':FloatermToggle newterm<cr>')
 vim.keymap.set('t','<c-x>','<C-\\><C-n>:FloatermToggle newterm<cr>')
-vim.keymap.set('n','<c-p>',':FloatermToggle --name=calculator python3.10<cr>')
+vim.keymap.set('n','<c-p>',':FloatermNew --disposable --name=calculator python3.10<cr>')
 vim.keymap.set('t','<c-p>','<C-\\><C-n>:FloatermToggle calculator<cr>')
 vim.keymap.set('n','<c-c>',':FloatermNew --autoclose=0 gcc % -o %< && ./%< <cr>')
 vim.cmd[[colorscheme catppuccin]]
