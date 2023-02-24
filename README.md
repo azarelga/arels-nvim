@@ -21,37 +21,37 @@ do you hate your mouse? have you ever felt tired of using vs code because how si
 
 # my keymapping
 
-keep in mind that keymapping disini ngikutin layout keyboard macbook 
+keep in mind the keymappings that are listed here are based on macbook pro's finland keyboard (i know its absurd but trust me when i say this, switch to a macbook) 
 
 `<leader>` : Space
 
 ### nvim-tree
 
-`<leader>t` : Buka `nvim-tree`
+`<leader>t` : open `nvim-tree`
 
 ### symbols-outline
 
-`<leader>s` : Buka `symbols-outline` (show objects and functions)
+`<leader>s` : open `symbols-outline` (show objects and functions)
 
 ### telescope
 
-`Space-ff` : Buka `telescope`
+`Space-ff` : open `telescope`
 
 ### treesitter
 
-`Space-e` : Buka diagnostics dari `treesitter`
+`Space-e` : open diagnostics from `treesitter`
 
-`[d` : Previous diagnostic
+`[d` : previous diagnostic
 
-`]d` : Next diagnostic
+`]d` : next diagnostic
 
 ### floaterm
 
-`Ctrl-x` : Buka floaterm biasa
+`Ctrl-x` : open regular ole floaterm 
 
-`Ctrl-p` : Buka floaterm python
+`Ctrl-p` : open floaterm with python
 
-`Ctrl-c` : Buka floaterm buat execute code
+`Ctrl-c` : open floaterm to execute Clang code (cautious on pressing this outside of `.C` file)
 
 # personal snippets
 
