@@ -1,3 +1,6 @@
+-- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
@@ -36,14 +39,15 @@ local lsp_flags = {
 	-- This is the default in Nvim 0.7+
 	debounce_text_changes = 150,
 }
-require('lspconfig')['pyright'].setup {
+
+require('lspconfig').clangd.setup {
 	on_attach = on_attach,
-	flags = lsp_flags,
 }
 
 require('lspconfig').tsserver.setup {
 	on_attach = on_attach,
 	flags = lsp_flags,
+	capabilities = capabilities,
 }
 
 require('lspconfig').lua_ls.setup {
@@ -55,8 +59,10 @@ require('lspconfig').lua_ls.setup {
 		},
 	},
 	on_attach = on_attach,
+	capabilities = capabilities,
 }
 
 require('lspconfig').pyright.setup {
 	on_attach = on_attach,
+	capabilities = capabilities,
 }

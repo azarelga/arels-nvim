@@ -75,6 +75,13 @@ require('packer').startup(function(use)
 		event = "VimEnter"
 	}
 	use {'nvim-treesitter/nvim-treesitter'} -- treesitter
+	use {'rafamadriz/friendly-snippets'}
+	use {'hrsh7th/nvim-cmp'}
+	use {'hrsh7th/cmp-nvim-lsp'}
+	use {'hrsh7th/cmp-nvim-lua'}
+	use {'hrsh7th/vim-vsnip'}
+	use {'hrsh7th/cmp-vsnip'}
+
 	use { -- lsp and mason
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
@@ -87,8 +94,6 @@ require('packer').startup(function(use)
     config = function() require("nvim-autopairs").setup {} end
 	}
 	use "tpope/vim-surround" -- surround to change pairs easy
-	use 'ms-jpq/coq-nvim' -- coq nvim
-	use 'ms-jpq/coq.artifacts' -- coq artifacts
 	use 'voldikss/vim-floaterm' -- terminal float
 	use {
   'nvim-telescope/telescope.nvim', tag = '0.1.1', -- telescope
@@ -174,7 +179,7 @@ vim.keymap.set('n','<c-c>',':FloatermNew --autoclose=0 gcc % -o %< && ./%< <cr>'
 vim.cmd[[colorscheme catppuccin]]
 
 -- find it in lua/me
-require("me.coq")
+require("me.cmp")
 require("me.lsp")
 require("me.treesitter")
 require("me.nvim-tree")
