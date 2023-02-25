@@ -39,18 +39,19 @@ local lsp_flags = {
 	-- This is the default in Nvim 0.7+
 	debounce_text_changes = 150,
 }
+local nvim_lsp = require('lspconfig')
 
-require('lspconfig').clangd.setup {
+nvim_lsp.clangd.setup {
 	on_attach = on_attach,
 }
 
-require('lspconfig').tsserver.setup {
+nvim_lsp.tsserver.setup {
 	on_attach = on_attach,
 	flags = lsp_flags,
 	capabilities = capabilities,
 }
 
-require('lspconfig').lua_ls.setup {
+nvim_lsp.lua_ls.setup {
 	settings = {
 		Lua = {
 			diagnostics = {
@@ -62,7 +63,6 @@ require('lspconfig').lua_ls.setup {
 	capabilities = capabilities,
 }
 
-require('lspconfig').pyright.setup {
+nvim_lsp.pyright.setup {
 	on_attach = on_attach,
-	capabilities = capabilities,
 }
