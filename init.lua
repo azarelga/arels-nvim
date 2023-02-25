@@ -6,6 +6,7 @@ vim.opt.relativenumber = true
 vim.opt.termguicolors = true
 vim.opt.mouse = 'a'
 vim.opt.hlsearch = false
+vim.g.did_load_filetypes = 1
 vim.opt.wrap = true
 vim.o.clipboard = 'unnamedplus'
 
@@ -75,12 +76,15 @@ require('packer').startup(function(use)
 		event = "VimEnter"
 	}
 	use {'nvim-treesitter/nvim-treesitter'} -- treesitter
-	use {'rafamadriz/friendly-snippets'}
-	use {'hrsh7th/nvim-cmp'}
+
+	use {'rafamadriz/friendly-snippets'} -- friendly-snippets
+	use {'hrsh7th/nvim-cmp'} --completion and his friends
 	use {'hrsh7th/cmp-nvim-lsp'}
 	use {'hrsh7th/cmp-nvim-lua'}
 	use {'hrsh7th/vim-vsnip'}
 	use {'hrsh7th/cmp-vsnip'}
+
+	use 'nathom/filetype.nvim'
 
 	use { -- lsp and mason
     "williamboman/mason.nvim",
@@ -171,16 +175,18 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+vim.keymap.set('n', '<leader>lg', ':FloatermNew --disposable --width=0.9 --height=0.7 --name=newterm lazygit<cr>')
+vim.keymap.set('t','<c-x>','<C-\\><C-n>:FloatermHide gitwindow<cr>')
 vim.keymap.set('n','<c-x>',':FloatermToggle newterm<cr>')
 vim.keymap.set('t','<c-x>','<C-\\><C-n>:FloatermToggle newterm<cr>')
 vim.keymap.set('n','<c-p>',':FloatermNew --disposable --name=calculator python3.10<cr>')
 vim.keymap.set('t','<c-p>','<C-\\><C-n>:FloatermToggle calculator<cr>')
-vim.keymap.set('n','<c-c>',':FloatermNew --autoclose=0 gcc % -o %< && ./%< <cr>')
 vim.cmd[[colorscheme catppuccin]]
 
 -- find it in lua/me
 require("me.cmp")
 require("me.lsp")
+require("me.filetype")
 require("me.treesitter")
 require("me.nvim-tree")
 require("me.catppuccin")
