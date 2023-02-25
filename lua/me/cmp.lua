@@ -8,17 +8,13 @@ local cmp = require('cmp')
       { name = 'nvim_lsp' },
     }),
     snippet = {
-      -- REQUIRED - you must specify a snippet engine
       expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+        vim.fn["vsnip#anonymous"](args.body)
       end,
     },
     window = {
-      completion = cmp.config.window.bordered(),cmp
-      -- documentation = cmp.config.window.bordered(),
+      -- completion = cmp.config.window.bordered(),cmp
+      documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -27,7 +23,7 @@ local cmp = require('cmp')
       ['<C-e>'] = cmp.mapping.abort(),
       ['<CR>'] = cmp.mapping.confirm({
 				behavior = cmp.ConfirmBehavior.Replace,
-				select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+				select = true }),
     }),
   })
 
@@ -46,14 +42,6 @@ cmp.event:on(
             cmp.lsp.CompletionItemKind.Method,
           },
           handler = handlers["*"]
-        }
-      },
-      lua = {
-        ["("] = {
-          kind = {
-            cmp.lsp.CompletionItemKind.Function,
-            cmp.lsp.CompletionItemKind.Method
-          },
         }
       },
     }
