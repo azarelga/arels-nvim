@@ -75,6 +75,7 @@ require('packer').startup(function(use)
 		requires = {'nvim-tree/nvim-web-devicons'},
 		event = "VimEnter"
 	}
+	use {'romgrk/barbar.nvim',requires = 'nvim-web-devicons'} -- bars
 	use {'nvim-treesitter/nvim-treesitter'} -- treesitter
 
 	use {'rafamadriz/friendly-snippets'} -- friendly-snippets
@@ -169,6 +170,7 @@ require("telescope").setup({
 
 -- keyboard shortcuts for plugins
 vim.g.mapleader=' '
+vim.keymap.set('n','<leader>p','\'dP')
 vim.keymap.set('n','<leader>t',':NvimTreeToggle <cr>')
 vim.keymap.set('n','<leader>s', ':SymbolsOutline <cr>')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
@@ -184,6 +186,7 @@ vim.keymap.set('t','<c-p>','<C-\\><C-n>:FloatermToggle calculator<cr>')
 vim.cmd[[colorscheme catppuccin]]
 
 -- find it in lua/me
+require("me.barbar")
 require("me.cmp")
 require("me.lsp")
 require("me.filetype")
