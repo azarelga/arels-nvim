@@ -17,7 +17,7 @@ require("filetype").setup({
         function_extensions = {
             ["cpp"] = function()
                 vim.bo.filetype = "cpp"
-								vim.keymap.set('n','<c-c>',':FloatermNew --autoclose=0 g++ % -o %< && ./%< <cr>')
+								vim.keymap.set('n','<c-c>',':FloatermNew --autoclose=0 g++ -std=c++11 % -o %< && ./%< <cr>')
             end,
 						["c"] = function()
 							vim.bo.filetype = "c"
