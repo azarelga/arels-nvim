@@ -86,7 +86,11 @@ require('packer').startup(function(use)
 	use {'hrsh7th/cmp-vsnip'}
 
 	use 'nathom/filetype.nvim'
-
+	use {
+		'xeluxee/competitest.nvim',
+		requires = 'MunifTanjim/nui.nvim',
+		config = function() require'competitest'.setup() end
+	}
 	use { -- lsp and mason
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
@@ -122,6 +126,7 @@ if install_plugins then
 end
 vim.g.vimtex_view_method = 'skim'
 
+require("competitest").setup()
 require("mason").setup()
 require("mason-lspconfig").setup()
 require("symbols-outline").setup({
@@ -151,8 +156,12 @@ require('lualine').setup({
 -- comment plugin config
 require('Comment').setup({
 	toggler = {
-		line = '<leader>/'
-	}
+		line = '<leader>/',
+	},
+	opleader = {
+			---Line-comment keymap
+			line = '<leader>/',
+	},
 })
 
 -- telescope
@@ -183,6 +192,9 @@ vim.keymap.set('n','<c-x>',':FloatermToggle newterm<cr>')
 vim.keymap.set('t','<c-x>','<C-\\><C-n>:FloatermToggle newterm<cr>')
 vim.keymap.set('n','<c-p>',':FloatermNew --disposable --name=calculator python3.10<cr>')
 vim.keymap.set('t','<c-p>','<C-\\><C-n>:FloatermToggle calculator<cr>')
+vim.keymap.set('n','<c-t>',':CompetiTestAdd <cr>')
+vim.keymap.set('n','<c-r>',':CompetiTestRun <cr>')
+vim.keymap.set('n','<c-e>',':CompetiTestEdit <cr>')
 vim.cmd[[colorscheme catppuccin]]
 
 -- find it in lua/me
