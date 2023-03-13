@@ -50,6 +50,7 @@ require('packer').startup(function(use)
     end
 	}
 	use 'lervag/vimtex'
+	use 'andweeb/presence.nvim'
 	use {
 		'glepnir/dashboard-nvim', -- dashboard
 		config = function()
@@ -86,28 +87,35 @@ require('packer').startup(function(use)
 	use {'hrsh7th/cmp-vsnip'}
 
 	use 'nathom/filetype.nvim'
+
 	use {
 		'xeluxee/competitest.nvim',
 		requires = 'MunifTanjim/nui.nvim',
 		config = function() require'competitest'.setup() end
 	}
+
 	use { -- lsp and mason
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
     "neovim/nvim-lspconfig",
 	}
+
 	use 'simrat39/symbols-outline.nvim' -- symbols outline
+
 	use {"catppuccin/nvim", as = "catppuccin"} -- my theme
+
 	use {
 	"windwp/nvim-autopairs", -- autopairs
     config = function() require("nvim-autopairs").setup {} end
 	}
-	use "tpope/vim-surround" -- surround to change pairs easy
+
 	use 'voldikss/vim-floaterm' -- terminal float
+
 	use {
   'nvim-telescope/telescope.nvim', tag = '0.1.1', -- telescope
   requires = { {'nvim-lua/plenary.nvim'} } -- telescope dependencies
 	}
+
 	use { 'nvim-lualine/lualine.nvim', -- lualine
 		requires = { 'kyazdani42/nvim-web-devicons', opt = true },
 		config = function()
@@ -124,8 +132,11 @@ end)
 if install_plugins then
   return
 end
+
+-- vimtex setup skim
 vim.g.vimtex_view_method = 'skim'
 
+-- some plugins setup
 require("competitest").setup()
 require("mason").setup()
 require("mason-lspconfig").setup()
@@ -145,15 +156,11 @@ require("symbols-outline").setup({
 			fold_reset = "R",
   },
 })
-
--- lualine config
 require('lualine').setup({
 	options = {
-		theme = 'OceanicNext'
+		theme = 'base16'
 	}
 })
-
--- comment plugin config
 require('Comment').setup({
 	toggler = {
 		line = '<leader>/',
@@ -195,6 +202,7 @@ vim.keymap.set('t','<c-p>','<C-\\><C-n>:FloatermToggle calculator<cr>')
 vim.keymap.set('n','<c-t>',':CompetiTestAdd <cr>')
 vim.keymap.set('n','<c-r>',':CompetiTestRun <cr>')
 vim.keymap.set('n','<c-e>',':CompetiTestEdit <cr>')
+require("me.catppuccin")
 vim.cmd[[colorscheme catppuccin]]
 
 -- find it in lua/me
@@ -204,5 +212,4 @@ require("me.lsp")
 require("me.filetype")
 require("me.treesitter")
 require("me.nvim-tree")
-require("me.catppuccin")
 
