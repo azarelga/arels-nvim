@@ -101,8 +101,7 @@ require('packer').startup(function(use)
 	}
 
 	use 'simrat39/symbols-outline.nvim' -- symbols outline
-
-	use {"catppuccin/nvim", as = "catppuccin"} -- my theme
+	use {'nyoom-engineering/oxocarbon.nvim'}
 
 	use {
 	"windwp/nvim-autopairs", -- autopairs
@@ -120,6 +119,9 @@ require('packer').startup(function(use)
 		requires = { 'kyazdani42/nvim-web-devicons', opt = true },
 		config = function()
 			require('lualine').setup({
+				options = {
+					theme = 'evil_lualine'
+				}
 			})
 		end,
 	}
@@ -155,11 +157,6 @@ require("symbols-outline").setup({
 			unfold_all = "E",
 			fold_reset = "R",
   },
-})
-require('lualine').setup({
-	options = {
-		theme = 'base16'
-	}
 })
 require('Comment').setup({
 	toggler = {
@@ -202,8 +199,8 @@ vim.keymap.set('t','<c-p>','<C-\\><C-n>:FloatermToggle calculator<cr>')
 vim.keymap.set('n','<c-t>',':CompetiTestAdd <cr>')
 vim.keymap.set('n','<c-r>',':CompetiTestRun <cr>')
 vim.keymap.set('n','<c-e>',':CompetiTestEdit <cr>')
-require("me.catppuccin")
-vim.cmd[[colorscheme catppuccin]]
+vim.opt.background = "dark"
+vim.cmd("colorscheme oxocarbon")
 
 -- find it in lua/me
 require("me.barbar")
