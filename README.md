@@ -51,11 +51,21 @@ keep in mind the keymappings that are listed here are based on macbook pro's fin
 
 `Ctrl-p` : open floaterm with python
 
-`Ctrl-c` : open floaterm to execute Clang code (cautious on pressing this outside of `.C` file)
+`Ctrl-c` : open floaterm to execute code (works only for ` .c ` and ` .cpp `)
+
+`<leader>lg` : open lazygit (you need to install it first on your shell)
+
+### competitest (the bfd for your cp needs)
+
+`Ctrl-t` : add them testcase
+
+`Ctrl-r` : run them testcase(s)
+
+`Ctrl-e` : edit them testcase
 
 # personal snippets
 
-everything else here that are not mentioned is a snippet from lsp or [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) as you may check it out on its respected repository. the rest here is just the taste of connoiseur of snippets, azarel grahandito adi.
+snippets are from lsp or [friendly-snippets](https://github.com/rafamadriz/friendly-snippets) as you may check it out on its respected repository. i added some of my most often used (personally) snippets of code here.
 lang | prefix        | description           | result  | 
 | ---------- | ------------- |:--------------------:| --------:|
 | C          | `letsgo`      | my go-to c starter   | `#include <stdio.h> #include <math.h> #include <string.h> #include <stdlib.h> #include <stdbool.h> typedef long long int ll; typedef unsigned long long int ull; int main() { }`|
