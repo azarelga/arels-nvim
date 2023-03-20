@@ -35,8 +35,8 @@ end
 
 -- using packer
 require('packer').startup(function(use)
-  use 'wbthomason/packer.nvim' -- Package manager
-	use {
+		use 'wbthomason/packer.nvim' -- Package manager 
+		use {
   	'nvim-tree/nvim-tree.lua', -- nvim tree
   	requires = {
     	'nvim-tree/nvim-web-devicons', -- optional, for file icons
@@ -52,32 +52,44 @@ require('packer').startup(function(use)
 	use 'lervag/vimtex'
 	use 'andweeb/presence.nvim'
 	use {
-		'glepnir/dashboard-nvim', -- dashboard
-		config = function()
-		require('dashboard').setup {
-			theme = 'hyper',
-			config = {
-				week_header = {
-				 enable = true,
-				},
-				shortcut = {
-					{ desc = ' Update',
-					group = '@property', action = 'PackerSync', key = 'u' },
-					{
-						desc = ' Files',
-						group = 'Label',
-						action = 'Telescope find_files',
-						key = 'f',
-					},
-				},
-			},
+				'lucastavaresa/simpleIndentGuides.nvim',
+				config = function()
+				vim.opt.list = true -- enable in all buffers
+				require("simpleIndentGuides").setup("┊")
+				end
 		}
-		end,
-		requires = {'nvim-tree/nvim-web-devicons'},
-		event = "VimEnter"
+	use {
+			'glepnir/dashboard-nvim', -- dashboard
+			config = function()
+			require('dashboard').setup {
+				theme = 'hyper',
+				config = {
+					week_header = {
+						enable = true,
+					},
+					shortcut = {
+						{ desc = ' Update',
+						group = '@property',
+						action = 'PackerSync',
+						key = 'u' },
+						{
+							desc = ' Files',
+							group = 'Label',
+							action = 'Telescope find_files',
+							key = 'f',
+						},
+					},
+
+				},
+			}
+			end,
+			requires = {'nvim-tree/nvim-web-devicons'},
+			event = "VimEnter"
 	}
+	use 'mfussenegger/nvim-dap'
 	use {'romgrk/barbar.nvim',requires = 'nvim-web-devicons'} -- bars
 	use {'nvim-treesitter/nvim-treesitter'} -- treesitter
+	use {'onsails/lspkind.nvim'}
 
 	use {'rafamadriz/friendly-snippets'} -- friendly-snippets
 	use {'hrsh7th/nvim-cmp'} --completion and his friends
@@ -85,7 +97,7 @@ require('packer').startup(function(use)
 	use {'hrsh7th/cmp-nvim-lua'}
 	use {'hrsh7th/vim-vsnip'}
 	use {'hrsh7th/cmp-vsnip'}
-
+	use "lukas-reineke/indent-blankline.nvim"
 	use 'nathom/filetype.nvim'
 
 	use {
@@ -111,8 +123,9 @@ require('packer').startup(function(use)
 	use 'voldikss/vim-floaterm' -- terminal float
 
 	use {
-  'nvim-telescope/telescope.nvim', tag = '0.1.1', -- telescope
-  requires = { {'nvim-lua/plenary.nvim'} } -- telescope dependencies
+  'nvim-telescope/telescope.nvim',
+	tag = '0.1.1', -- telescope
+	requires =  {'nvim-lua/plenary.nvim'} -- telescope dependencies
 	}
 
 	use { 'nvim-lualine/lualine.nvim', -- lualine
@@ -203,6 +216,7 @@ vim.opt.background = "dark"
 vim.cmd("colorscheme oxocarbon")
 
 -- find it in lua/me
+require("me.dap")
 require("me.barbar")
 require("me.cmp")
 require("me.lsp")
