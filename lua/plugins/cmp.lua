@@ -1,21 +1,38 @@
 -- If you want insert `(` after select function or method item
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local cmp = require('cmp')
-
-  cmp.setup({
+cmp.setup({
     sources = cmp.config.sources({
-      { name = 'vsnip' },
-      { name = 'nvim_lsp' },
+			{name = 'nvim_lsp_signature_help'},
+			{name = 'path'},
+			{name = 'buffer'},
+      {name = 'vsnip'},
+      {name = 'nvim_lsp'},
     }),
     snippet = {
       expand = function(args)
         vim.fn["vsnip#anonymous"](args.body)
       end,
     },
+		completion = {
+			completeopt = "menu,menuone",
+		},
     window = {
-      -- completion = cmp.config.window.bordered(),cmp
+			completion = {
+				winhighlight = "FloatBorder:Pmenu,Search:PmenuSel,Normal:CmpPmenu",
+			},
       documentation = cmp.config.window.bordered(),
     },
+		formatting = {
+			fields = { "kind", "abbr", "menu" },
+			format = function(entry, vim_item)
+				local kind = require("lspkind").cmp_format({ mode = "symbol_text", maxwidth = 50 })(entry, vim_item)
+				local strings = vim.split(kind.kind, "%s", { trimempty = true })
+				kind.kind = " " .. (strings[1] or "") .. " "
+				kind.menu = "    (" .. (strings[2] or "") .. ")"
+				return kind
+			end,
+		},
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -27,14 +44,12 @@ local cmp = require('cmp')
     }),
   })
 
-
 local handlers = require('nvim-autopairs.completion.handlers')
 
 cmp.event:on(
   'confirm_done',
   cmp_autopairs.on_confirm_done({
     filetypes = {
-      -- "*" is a alias to all filetypes
       ["*"] = {
         ["("] = {
           kind = {
